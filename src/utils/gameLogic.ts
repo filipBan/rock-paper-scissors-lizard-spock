@@ -1,5 +1,7 @@
 export type Choice = 'rock' | 'paper' | 'scissors' | 'lizard' | 'spock'
-export type Result = 'player1' | 'player2' | 'tie'
+
+export type Player = 'player1' | 'player2'
+export type Result = Player | 'tie'
 
 export interface Outcome {
   winner: Result
