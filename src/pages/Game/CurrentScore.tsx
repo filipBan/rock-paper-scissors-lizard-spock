@@ -8,15 +8,12 @@ export const CurrentScore = () => {
     <div className="flex flex-col items-center justify-center gap-4">
       <TurnIndicator />
 
-      <div className="flex flex-col items-center justify-center h-12 gap-2 mb-4">
+      <div className="flex flex-col items-center justify-center h-8 gap-2 mb-4">
         {currentScore ? (
-          <>
-            <p className="text-xl">Current score:</p>
-            <p className="text-xl">
-              {player1Name} {currentScore?.[player1Name]} vs{' '}
-              {currentScore?.[player2Name]} {player2Name}
-            </p>
-          </>
+          <p className="text-2xl">
+            {player1Name} {currentScore?.[player1Name] ?? 0} vs{' '}
+            {currentScore?.[player2Name] ?? 0} {player2Name}
+          </p>
         ) : null}
       </div>
     </div>
