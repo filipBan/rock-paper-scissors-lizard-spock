@@ -1,18 +1,14 @@
 import { useLeaderboardData } from '../../utils/useLeaderboardData'
 
 export function Leaderboard() {
-  const { getLeaderboardData } = useLeaderboardData()
-
-  const leaderboardData = getLeaderboardData()
+  const { leaderboardData, clearLeaderboardData } = useLeaderboardData()
 
   if (Object.keys(leaderboardData).length === 0) {
     return <div>No data</div>
   }
 
   return (
-    <div>
-      <h2>Leaderboard</h2>
-
+    <div className="flex flex-col items-center gap-16">
       <div className="flex justify-center w-full overflow-x-auto">
         <table className="table text-lg max-w-32 md:max-w-lg">
           <thead>
@@ -35,6 +31,9 @@ export function Leaderboard() {
           </tbody>
         </table>
       </div>
+      <button className="btn btn-secondary" onClick={clearLeaderboardData}>
+        Reset
+      </button>
     </div>
   )
 }

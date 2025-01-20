@@ -98,13 +98,14 @@ export const useGameState = () => {
   const handleSetResult = (result: Outcome | null) => {
     setResult(result)
     saveDataInSessionStorage({ result })
-    addPoint(result?.winner === 'player1' ? player1Name : player2Name)
+    if (result) {
+      addPoint(result?.winner === 'player1' ? player1Name : player2Name)
+    }
   }
 
   const handlePlayAgain = () => {
     setPlayer1Choice(null)
     setPlayer2Choice(null)
-    setResult(null)
     handleSetPlayerChoice('player1', null)
     handleSetPlayerChoice('player2', null)
     handleSetResult(null)

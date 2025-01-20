@@ -1,6 +1,15 @@
+import { useEffect, useState } from 'react'
+
 type LeaderboardData = Record<string, number>
 
 export const useLeaderboardData = () => {
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardData>({})
+
+  useEffect(() => {
+    const data = getLeaderboardData()
+    setLeaderboardData(data)
+  }, [])
+
   const getLeaderboardData = (): LeaderboardData => {
     const data: string | null = sessionStorage.getItem('leaderboard')
     if (data) {
@@ -18,6 +27,7 @@ export const useLeaderboardData = () => {
   }
 
   const clearLeaderboardData = async () => {
+    setLeaderboardData({})
     sessionStorage.removeItem('leaderboard')
   }
 
@@ -27,5 +37,5 @@ export const useLeaderboardData = () => {
     await saveLeaderboardData(leaderboardData)
   }
 
-  return { getLeaderboardData, clearLeaderboardData, addPoint }
+  return { leaderboardData, clearLeaderboardData, addPoint }
 }
