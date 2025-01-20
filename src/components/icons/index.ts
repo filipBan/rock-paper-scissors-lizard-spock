@@ -1,0 +1,5 @@
+export { Rock } from './Rock'
+export { Paper } from './Paper'
+export { Scissors } from './Scissors'
+export { Lizard } from './Lizard'
+export { Spock } from './Spock'

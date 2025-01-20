@@ -1,9 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import { Layout } from './components/Layout'
-import { Home } from './pages/Home'
-import { Game } from './pages/Game'
-import { Leaderboard } from './pages/Leaderboard'
+import { Home, Game, Leaderboard } from './pages'
 
 function App() {
   return (

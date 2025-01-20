@@ -44,7 +44,7 @@ const rules = new Map<Choice, Map<Choice, string>>([
   ],
 ])
 
-export function playGame(
+export function getGameResult(
   player1Choice: Choice,
   player2Choice: Choice
 ): Outcome {

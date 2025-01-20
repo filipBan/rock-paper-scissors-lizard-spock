@@ -1,11 +1,8 @@
-import { ReactNode, useEffect, useState } from 'react'
-import { Lizard } from '../components/icons/Lizard'
-import { Paper } from '../components/icons/Paper'
-import { Rock } from '../components/icons/Rock'
-import { Scissors } from '../components/icons/Scissors'
-import { Spock } from '../components/icons/Spock'
-import { Choice, Outcome, playGame } from '../utils/gameLogic'
-import { useLeaderboardData } from '../utils/useLeaderboardData'
+import { ReactNode, useEffect } from 'react'
+
+import { Choice, getGameResult } from '../../utils/gameLogic'
+import { useGameState } from '../../utils/useGameState'
+import { Rock, Paper, Scissors, Lizard, Spock } from '../../components'
 
 const choices: Record<Choice, ReactNode> = {
   rock: <Rock />,
@@ -16,34 +13,41 @@ const choices: Record<Choice, ReactNode> = {
 }
 
 export function Game() {
-  const [player1Name, setPlayer1Name] = useState('')
-  const [player2Name, setPlayer2Name] = useState('')
-  const [player1Choice, setPlayer1Choice] = useState<Choice | null>()
-  const [player2Choice, setPlayer2Choice] = useState<Choice | null>()
-  const [result, setResult] = useState<Outcome | null>(null)
-  const { addPoint } = useLeaderboardData()
+  const {
+    player1Name,
+    player2Name,
+    player1Choice,
+    player2Choice,
+    result,
+    handleSetPlayerName,
+    handleSetPlayerChoice,
+    handleSetResult,
+    handlePlayAgain,
+    handleResetGame,
+  } = useGameState()
 
   useEffect(() => {
     if (player1Choice && player2Choice && !result) {
-      const result = playGame(player1Choice, player2Choice)
+      const result = getGameResult(player1Choice, player2Choice)
 
-      setResult(result)
-
-      if (result.winner === 'player1') {
-        addPoint(player1Name)
-      } else if (result.winner === 'player2') {
-        addPoint(player2Name)
-      }
+      handleSetResult(result)
     }
-  }, [addPoint, player1Choice, player1Name, player2Choice, player2Name, result])
+  }, [
+    handleSetResult,
+    player1Choice,
+    player1Name,
+    player2Choice,
+    player2Name,
+    result,
+  ])
 
   const areButtonsDisabled = !player1Name || !player2Name
 
   const handleChoice = (choice: Choice) => {
     if (!player1Choice) {
-      setPlayer1Choice(choice)
+      handleSetPlayerChoice('player1', choice)
     } else if (!player2Choice) {
-      setPlayer2Choice(choice)
+      handleSetPlayerChoice('player2', choice)
     }
   }
 
@@ -55,20 +59,6 @@ export function Game() {
     }
   }
 
-  const handlePlayAgain = () => {
-    setPlayer1Choice(null)
-    setPlayer2Choice(null)
-    setResult(null)
-  }
-
-  const handleReset = () => {
-    setPlayer1Name('')
-    setPlayer2Name('')
-    setPlayer1Choice(null)
-    setPlayer2Choice(null)
-    setResult(null)
-  }
-
   return (
     <div>
       <div className="flex flex-col items-center justify-center h-32 gap-2 p-4 sm:flex-row lg:gap-12 md:gap-8 sm:gap-4">
@@ -78,7 +68,7 @@ export function Game() {
             type="text"
             placeholder="Player 1 name"
             value={player1Name}
-            onChange={(e) => setPlayer1Name(e.target.value)}
+            onChange={(e) => handleSetPlayerName('player1', e.target.value)}
           />
           {player1Choice && (
             <div className="[&>svg]:w-6 text-slate-700">
@@ -92,7 +82,7 @@ export function Game() {
             type="text"
             placeholder="Player 2 name"
             value={player2Name}
-            onChange={(e) => setPlayer2Name(e.target.value)}
+            onChange={(e) => handleSetPlayerName('player2', e.target.value)}
           />
           {player2Choice && (
             <div className="[&>svg]:w-6 text-slate-700">
@@ -136,7 +126,7 @@ export function Game() {
           >
             Play again
           </button>
-          <button className="w-32 btn" onClick={handleReset}>
+          <button className="w-32 btn" onClick={handleResetGame}>
             Reset
           </button>
         </div>

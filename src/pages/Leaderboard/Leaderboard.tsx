@@ -1,4 +1,4 @@
-import { useLeaderboardData } from '../utils/useLeaderboardData'
+import { useLeaderboardData } from '../../utils/useLeaderboardData'
 
 export function Leaderboard() {
   const { getLeaderboardData } = useLeaderboardData()
