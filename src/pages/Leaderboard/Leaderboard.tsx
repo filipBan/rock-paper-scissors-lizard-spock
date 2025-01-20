@@ -19,15 +19,17 @@ export function Leaderboard() {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(leaderboardData).map(
-              ([playerName, score], index) => (
+            {Object.entries(leaderboardData)
+              .sort((a, b) => {
+                return b[1] - a[1]
+              })
+              .map(([playerName, score], index) => (
                 <tr key={playerName} className="hover">
                   <td>{index + 1}</td>
                   <td>{playerName}</td>
                   <td>{score}</td>
                 </tr>
-              )
-            )}
+              ))}
           </tbody>
         </table>
       </div>
