@@ -5,6 +5,7 @@ import { Rock } from '../components/icons/Rock'
 import { Scissors } from '../components/icons/Scissors'
 import { Spock } from '../components/icons/Spock'
 import { Choice, Outcome, playGame } from '../utils/gameLogic'
+import { useLeaderboardData } from '../utils/useLeaderboardData'
 
 const choices: Record<Choice, ReactNode> = {
   rock: <Rock />,
@@ -20,16 +21,23 @@ export function Game() {
   const [player1Choice, setPlayer1Choice] = useState<Choice | null>()
   const [player2Choice, setPlayer2Choice] = useState<Choice | null>()
   const [result, setResult] = useState<Outcome | null>(null)
+  const { addPoint } = useLeaderboardData()
 
   useEffect(() => {
-    if (player1Choice && player2Choice) {
+    if (player1Choice && player2Choice && !result) {
       const result = playGame(player1Choice, player2Choice)
 
       setResult(result)
-    }
-  }, [player1Choice, player2Choice])
 
-  const areButtonsDisabled = !player1Name || !player2Name || !!result
+      if (result.winner === 'player1') {
+        addPoint(player1Name)
+      } else if (result.winner === 'player2') {
+        addPoint(player2Name)
+      }
+    }
+  }, [addPoint, player1Choice, player1Name, player2Choice, player2Name, result])
+
+  const areButtonsDisabled = !player1Name || !player2Name
 
   const handleChoice = (choice: Choice) => {
     if (!player1Choice) {
