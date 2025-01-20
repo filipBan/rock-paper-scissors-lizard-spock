@@ -118,7 +118,7 @@ export function Game() {
           )}
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 mb-4">
           <button
             className="w-32 btn"
             onClick={handlePlayAgain}
@@ -130,6 +130,8 @@ export function Game() {
             Reset
           </button>
         </div>
+
+        <img src="/RPSLS.webp" alt="Rock paper scissors lizard spock" />
       </div>
     </div>
   )

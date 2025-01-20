@@ -2,10 +2,19 @@ import { Link } from 'react-router-dom'
 
 export function Home() {
   return (
-    <div>
-      <h2>Home</h2>
+    <div className="flex flex-col items-center justify-center gap-4">
+      <iframe
+        className="w-full h-auto aspect-video"
+        src="https://www.youtube.com/embed/pIpmITBocfM?si=9vOSBlI3T_9iABv4"
+        title="Rock paper scissors lizard spock"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen={false}
+      ></iframe>
 
-      <Link to="/game">Play</Link>
+      <button className="text-2xl btn btn-primary">
+        <Link to="/game">Let's play!</Link>
+      </button>
     </div>
   )
 }
